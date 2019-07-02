@@ -74,6 +74,6 @@ class Usuario extends Model
     		}
     		$n++;
 	    }
-    	dd($encontrados);
+    	return $encontrados;
     }
 }

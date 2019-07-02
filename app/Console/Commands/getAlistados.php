@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Usuario;
 
 class getAlistados extends Command
 {
@@ -11,14 +12,14 @@ class getAlistados extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'cargar:alistados';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Obtiene todos los alistados y los almacena en la BBDD';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,7 @@ class getAlistados extends Command
      */
     public function handle()
     {
-        //
+        $result = Usuario::getAlistamiento();
+        echo "Se han alistado ".count($result)." usuarios\n";
     }
 }
