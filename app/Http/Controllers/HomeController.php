@@ -25,6 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         $usuarios = Usuario::orderBy('validado', 'asc')->get();
-        return view('home', compact("usuarios"));
+        $totalUsuarios = count($usuarios);
+        $totalVerificados = count(Usuario::where('validado', 1)->get());
+        return view('home', compact(["usuarios", "totalUsuarios", "totalVerificados"]));
     }
 }

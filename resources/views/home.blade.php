@@ -15,7 +15,17 @@
                         </div>
                     @endif
             <div class="card">
-                <div class="card-header">Usuarios</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col text-left">
+                            <h4>Usuarios</h4>
+                        </div>
+                        <div class="col text-right">
+                            Total: {{$totalUsuarios}}<br>
+                            Verificados: {{$totalVerificados}}
+                        </div>
+                    </div>
+                </div>
                     
                 <div class="card-body">
                     <table class="table ttable-sm table-hover" id="tablaUsuarios">
