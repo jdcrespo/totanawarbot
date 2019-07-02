@@ -34,3 +34,7 @@ Route::get('/tweets', function () {
 	return $data;
 });
 */
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
