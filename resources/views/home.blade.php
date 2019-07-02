@@ -49,8 +49,8 @@
                                             <span class="badge badge-success">SI ({{$usuario->validado_por}})</span>
                                         @else
                                             <span class="badge badge-danger">NO</span>
+                                            <a href="/usuarios/verificar/{{$usuario->twitter_user_id}}" class="btn btn-primary btn-sm" onclick='return confirm("¿Estás seguro?")'>Verificar</a>
                                         @endif
-                                        <a href="/usuarios/verificar/{{$usuario->twitter_user_id}}" class="btn btn-primary btn-sm" onclick='return confirm("¿Estás seguro?")'>Verificar</a>
                                     </td>
                                     <td> 
                                         @if ($usuario->vivo)
