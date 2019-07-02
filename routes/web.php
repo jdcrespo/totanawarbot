@@ -23,4 +23,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource("tipoTweet", "TipoTweetController");
+
+Route::get('/pruebas', function () {
+    return Twitter::getTweet("1142472066001756160", ["format" => "array"]);
+});
+
 Route::get('/usuarios/verificar/{idUsuario}', 'UsuariosController@valida')->name('verificar');
