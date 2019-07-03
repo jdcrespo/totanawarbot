@@ -35,7 +35,7 @@ class TipoTweetController extends Controller
      */
     public function create()
     {
-        return view("tipoTweet/edit");
+        return view("tipoTweet.edit");
     }
 
     /**
@@ -62,7 +62,7 @@ class TipoTweetController extends Controller
                         "asesinos" => $asesinos,
         ]);
         if($tipoTweet->save()){
-            return redirect('/tipoTweet')->with('guardado', 'Plantilla añadida correctamente');
+            return redirect()->route("tipoTweet.index")->with('guardado', 'Plantilla añadida correctamente');
         }else{
             return back()->withInput()->withErrors(['guardado', 'Error al guardar']);
         }
@@ -76,7 +76,8 @@ class TipoTweetController extends Controller
      */
     public function show($id)
     {
-        //
+        $tipoTweet = TipoTweet::findOrFail($id);
+        return view("tipoTweet.show", compact('tipoTweet'));
     }
 
     /**
@@ -87,7 +88,8 @@ class TipoTweetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tipoTweet = TipoTweet::findOrFail($id);
+        return view("tipoTweet.show", compact('tipoTweet'));
     }
 
     /**
@@ -99,7 +101,23 @@ class TipoTweetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tipoTweet = TipoTweet::findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'contenido' => 'required|max:240',
+        ]);
+
+        $victimas = substr_count($request->contenido, "@[VICTIMA]");
+        $asesinos = substr_count($request->contenido, "@[ASESINO]");
+        if($victimas <= 0){
+            return back()->withInput()->withErrors(['contenido', 'Debe haber al menos una víctima']);
+        }
+        $tipoTweet->contenido = $request->contenido;
+        $tipoTweet->victimas = $victimas;
+        $tipoTweet->asesinos = $asesinos;
+        $tipoTweet->update();
+        
+        return redirect()->route("tipoTweet.index");
     }
 
     /**
@@ -110,6 +128,7 @@ class TipoTweetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tipoTweet = TipoTweet::findOrFail($id)->delete();
+        return redirect()->route("tipoTweet.index");
     }
 }
