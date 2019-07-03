@@ -1,13 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="/tipoTweet/create" class="btn btn-primary">Crear</a>
+<a href="{{ route('tipoTweet.edit') }}" class="btn btn-primary">Crear</a>
 <table class="table ttable-sm table-hover" id="tablaUsuarios">
 	<thead>
 		<tr>
 			<th scope="col">Texto</th>
-			<th scope="col">Asesinos</th>
-			<th scope="col">Victimas</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -18,10 +16,11 @@
 				{{$tipo->contenido}}
 			</td>
 			<td>
-				{{$tipo->asesinos}}
-			</td>
-			<td>
-				{{$tipo->victimas}}
+				<form style="display: inline;" method="post" action="{{ route('tipoTweet.destroy', $tipo->id) }}">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                </form>
 			</td>
 		</tr>
 		@endforeach
