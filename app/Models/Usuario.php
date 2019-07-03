@@ -81,7 +81,7 @@ class Usuario extends Model
     }
     
     
-    public function getImagenEstado($rutaImagenes){
+    public static function getImagenEstado($rutaImagenes){
         $fontSize = 24;
         $margin = 5;
         
