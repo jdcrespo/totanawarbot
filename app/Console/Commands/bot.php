@@ -2,6 +2,7 @@
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\TipoTweet;
+use App\Models\MuerteTweet;
 
 class bot extends Command
 {
@@ -67,6 +68,16 @@ class bot extends Command
             }
             if($asesino){
                 $texto = str_replace("[ASESINO]", $asesino->nombre, $texto);
+            }
+            if($victima && strpos($texto, "[VICTIMA]") === false && strpos($texto, "[ASESINO]") === false){
+                    $nombreImagen = "images/".date("Ymd").".jpg";
+                    Usuario::getImagenEstado($nombreImagen);
+                    // $muerte = new MuerteTweet([
+                    //                "texto" => $texto,
+                    //                "imagen" => $nombreImagen
+                    // ]);
+                	// $uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path($nombreImagen))]);
+	                // Twitter::postTweet(['status' => $texto, 'media_ids' => $uploaded_media->media_id_string]);
             }
         }
         
