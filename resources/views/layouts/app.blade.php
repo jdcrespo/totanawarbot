@@ -36,10 +36,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/tipoTweet">Plantillas</a>
+                            <a class="nav-link" href="/tipoTweet">Plantillas tweets</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/muertes">Muertes</a>
+                            <a class="nav-link" href="/muertes">Ult. muertes</a>
                         </li>
                     </ul>
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ route('tipoTweet.edit') }}" class="btn btn-primary">Crear</a>
+<a href="{{ route('tipoTweet.create') }}" class="btn btn-primary">Crear</a>
 <table class="table ttable-sm table-hover" id="tablaUsuarios">
 	<thead>
 		<tr>

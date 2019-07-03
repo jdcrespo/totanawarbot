@@ -1,10 +1,8 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
-class UpdateUsuariosTable extends Migration
+class UpdateUsuariosTableAddUltimoAsesinato extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +12,9 @@ class UpdateUsuariosTable extends Migration
     public function up()
     {
         Schema::table('usuarios', function (Blueprint $table) {
-            $table->integer('asesinatos_cometidos')->default(0);
+            $table->datetime('ultimo_asesinato')->nullable();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -25,6 +22,6 @@ class UpdateUsuariosTable extends Migration
      */
     public function down()
     {
-        $table->dropColumn('asesinatos_cometidos');
+        $table->dropColumn('ultimo_asesinato');
     }
 }
