@@ -42,12 +42,31 @@ class bot extends Command
                                 ["verificado", 1],
                                 ["vivo", 1]
                 ])->inRandomOrder()->first();
+            // Si es necesario un asesino lo obtemos de igual forma pero excluyendo a la victima
             $asesino = null;
-            if($tipoTweet->asesinos > 0){
+            if($tipoTweet->asesinos > 0 && $victima){
                 $asesino = Usuario::where([
                             ["verificado", 1],
-                            ["vivo", 1]
+                            ["vivo", 1],
+                            ["id", "!=", $victima->id]
                     ])->inRandomOrder()->first();
+            }
+            
+            // Actualizamos el estado de la victima y el asesino si lo hubiera
+            $victima->vivo = 0;
+            $victima->save();
+            
+            if($asesino){
+                $asesino->asesinatos_cometidos = $asesino->asesinatos_cometidos + 1;
+                $asesino->save();                
+            }
+            
+            // Preparamos el contenido del tweet
+            if($victima){
+                $texto = str_replace("[VICTIMA]", $victima->nombre, $texto);
+            }
+            if($asesino){
+                $texto = str_replace("[ASESINO]", $asesino->nombre, $texto);
             }
         }
         
