@@ -12,6 +12,9 @@ class Usuario extends Model
 
 	const ID_TWEET_ALISTAMIENTO = "1145694000772370434";
 	const NOMBRE_CUENTA_BOT = "TotanaWarBot";
+    
+    const RESOLUCION_X_IMAGE = 1080;
+    const RESOLUCION_Y_IMAGE = 1080;
 
     public static function getAlistamiento(){
     	$encontrados = array();
@@ -80,5 +83,6 @@ class Usuario extends Model
     
     public function getImagenEstado($rutaImagenes){
         $usuarios = Usuario::where("validado", 1)->get();   
+        $img = Image::make('public/foo.jpg');
     }
 }
