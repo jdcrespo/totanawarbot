@@ -38,6 +38,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/tipoTweet">Plantillas</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/muertes">Muertes</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
