@@ -3,6 +3,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\TipoTweet;
 use App\Models\MuerteTweet;
+use App\Models\Usuario;
+use Twitter;
+use File;
 
 class bot extends Command
 {
@@ -40,14 +43,14 @@ class bot extends Command
             $texto = $tipoTweet->contenido;
             //Obtenemos un usuario verificado y vivo como victima
             $victima = Usuario::where([
-                                ["verificado", 1],
+                                ["validado", 1],
                                 ["vivo", 1]
                 ])->inRandomOrder()->first();
             // Si es necesario un asesino lo obtemos de igual forma pero excluyendo a la victima
             $asesino = null;
             if($tipoTweet->asesinos > 0 && $victima){
                 $asesino = Usuario::where([
-                            ["verificado", 1],
+                            ["validado", 1],
                             ["vivo", 1],
                             ["id", "!=", $victima->id]
                     ])->inRandomOrder()->first();
@@ -69,15 +72,21 @@ class bot extends Command
             if($asesino){
                 $texto = str_replace("[ASESINO]", $asesino->nombre, $texto);
             }
+            
             if($victima && strpos($texto, "[VICTIMA]") === false && strpos($texto, "[ASESINO]") === false){
-                    $nombreImagen = "images/".date("Ymd").".jpg";
+                    $nombreImagen = "images/".date("YmdHis").".jpg";
                     Usuario::getImagenEstado($nombreImagen);
-                    // $muerte = new MuerteTweet([
-                    //                "texto" => $texto,
-                    //                "imagen" => $nombreImagen
-                    // ]);
-                	// $uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path($nombreImagen))]);
-	                // Twitter::postTweet(['status' => $texto, 'media_ids' => $uploaded_media->media_id_string]);
+                     $muerte = new MuerteTweet([
+                                    "texto" => $texto,
+                                    "imagen" => $nombreImagen
+                     ]);
+                     $muerte->save();
+                	$uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path($nombreImagen))]);
+	                Twitter::postTweet([
+                            'status' => $texto, 
+                            'format' => 'json',
+                            'media_ids' => $uploaded_media->media_id_string
+                        ]);
             }
         }
         

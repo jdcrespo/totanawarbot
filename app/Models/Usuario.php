@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Twitter;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Usuario extends Model
 {
@@ -13,7 +14,7 @@ class Usuario extends Model
 	const ID_TWEET_ALISTAMIENTO = "1145694000772370434";
 	const NOMBRE_CUENTA_BOT = "TotanaWarBot";
     
-    const RESOLUCION_X_IMAGE = 1080;
+    const RESOLUCION_X_IMAGE = 2048;
     const RESOLUCION_Y_IMAGE = 1080;
 
     public static function getAlistamiento(){
@@ -81,25 +82,48 @@ class Usuario extends Model
     }
     
     
-    public static function getImagenEstado($rutaImagenes){
+    public static function getImagenEstado($rutaImagenes, $sinMuertes = false){
         $fontSize = 24;
-        $margin = 5;
+        $margin = 25;
+        $usuariosPorColumna = 40;
+        $maxX = 0;
+        $maxY = 0;
         
-        $usuarios = Usuario::where("validado", 1)->get();   
+        $usuarios = Usuario::where("validado", 1)->orderBy("nombre", "asc")->get();   
         $img = Image::canvas(self::RESOLUCION_X_IMAGE, self::RESOLUCION_Y_IMAGE, "#fff");
         
         if($img && $usuarios){
+            $cuenta = 0;
+            $posY = $margin;
+            $posX = $margin*3;
             foreach($usuarios as $usuario){
                 $color = "#000000";
-                if($usuario->vivo == 0){
+                if($usuario->vivo == 0 && !$sinMuertes){
                     $color = "#ff0000";   
                 }
-                $img->text('@'.$usuario->nombre, 0, 0, function($font) {
+                $img->text('@'.$usuario->nombre, $posX, $posY, function($font) use ($fontSize, $color) {
+                    $font->file(5);
                     $font->size($fontSize);
                     $font->color($color);
-                    $font->align('center');
-                });        
-            }            
+                    $font->align('left');
+                });
+                if($cuenta >= $usuariosPorColumna-1){
+                    $cuenta = 0;
+                    $posY = ($margin);
+                    $posX += 300;
+                }else{
+                    $cuenta++;
+                    $posY += ( $margin);
+                }  
+                if($posX+$margin >= $maxX){
+                    $maxX = $posX+$margin;
+                }
+                if($posY+$margin >= $posY){
+                    $maxY = $posY+$margin;
+                }      
+            }  
+            //echo "Max X: ".$maxX." max y: ".$maxY."\n";
+            //$img->resize($maxX, $maxY);          
         }
                 
         $img->save(public_path($rutaImagenes));

@@ -41,6 +41,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/muertes">Ult. muertes</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="/images/listado.jpg">Listado</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
