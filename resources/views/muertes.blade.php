@@ -15,7 +15,7 @@
                     {{ $muerte->texto }}
                 </td>
                 <td class="text-center">
-                    <a href="{{$muerte->imagen}}" class='btn btn-info'>
+                    <a href="{{$muerte->imagen}}" target="_blank" class='btn btn-info'>
                         IMAGEN
                     </a>
                 </td>
