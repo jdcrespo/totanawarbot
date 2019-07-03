@@ -82,7 +82,26 @@ class Usuario extends Model
     
     
     public function getImagenEstado($rutaImagenes){
+        $fontSize = 24;
+        $margin = 5;
+        
         $usuarios = Usuario::where("validado", 1)->get();   
-        $img = Image::make('public/foo.jpg');
+        $img = Image::canvas(self::RESOLUCION_X_IMAGE, self::RESOLUCION_Y_IMAGE, "#fff");
+        
+        if($img && $usuarios){
+            foreach($usuarios as $usuario){
+                $color = "#000000";
+                if($usuario->vivo == 0){
+                    $color = "#ff0000";   
+                }
+                $img->text('@'.$usuario->nombre, 0, 0, function($font) {
+                    $font->size($fontSize);
+                    $font->color($color);
+                    $font->align('center');
+                });        
+            }            
+        }
+                
+        $img->save(public_path($rutaImagenes));
     }
 }
