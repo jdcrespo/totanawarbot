@@ -1,7 +1,8 @@
 <?php
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
-use App\Models\Usuario;
+use App\Models\TipoTweet;
+
 class bot extends Command
 {
     /**
@@ -33,7 +34,22 @@ class bot extends Command
     public function handle()
     {
         //Se obtiene una plantilla aleatoria para la generación del tweet
-        $tipoTweet = 
+        $tipoTweet = TipoTweet::inRandomOrder()->first();
+        if($tipoTweet){
+            $texto = $tipoTweet->contenido;
+            //Obtenemos un usuario verificado y vivo como victima
+            $victima = Usuario::where([
+                                ["verificado", 1],
+                                ["vivo", 1]
+                ])->inRandomOrder()->first();
+            $asesino = null;
+            if($tipoTweet->asesinos > 0){
+                $asesino = Usuario::where([
+                            ["verificado", 1],
+                            ["vivo", 1]
+                    ])->inRandomOrder()->first();
+            }
+        }
         
     }
 }
