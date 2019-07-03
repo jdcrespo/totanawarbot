@@ -76,4 +76,9 @@ class Usuario extends Model
 	    }
     	return $encontrados;
     }
+    
+    
+    public function getImagenEstado($rutaImagenes){
+        $usuarios = Usuario::where("validado", 1)->get();   
+    }
 }
