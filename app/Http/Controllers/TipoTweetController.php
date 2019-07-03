@@ -35,7 +35,7 @@ class TipoTweetController extends Controller
      */
     public function create()
     {
-        return view("tipoTweet.edit");
+        return view("tipoTweet.create");
     }
 
     /**
