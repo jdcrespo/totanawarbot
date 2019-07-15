@@ -24,10 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+	$schedule->command('ejecuta:bot')
+                  ->hourly()
+//->everyMinute()
+                  ->unlessBetween("00:30", "09:00");
     }
-
     /**
      * Register the commands for the application.
      *

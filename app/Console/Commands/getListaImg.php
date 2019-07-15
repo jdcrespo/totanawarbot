@@ -38,6 +38,6 @@ class getListaImg extends Command
      */
     public function handle()
     {
-       Usuario::getImagenEstado("images/listado.jpg", true);
+       Usuario::getImagenEstado("images/listado.jpg", false);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\MuerteTweet;
 use App\Models\Usuario;
 use Twitter;
 use File;
+use Carbon\Carbon;
 
 class bot extends Command
 {
@@ -37,8 +38,10 @@ class bot extends Command
      */
     public function handle()
     {
-        //Se obtiene una plantilla aleatoria para la generación del tweet
-        $tipoTweet = TipoTweet::inRandomOrder()->first();
+        //Se obtiene una plantilla aleatoria para la generación del tweet que no se haya usado durante el día de hoy
+        $tipoTweet = TipoTweet::where("usado", "<", Carbon::now()->subDays(2))
+                                ->inRandomOrder()
+                                ->first();
         if($tipoTweet){
             $texto = $tipoTweet->contenido;
             //Obtenemos un usuario verificado y vivo como victima
@@ -55,6 +58,9 @@ class bot extends Command
                             ["id", "!=", $victima->id]
                     ])->inRandomOrder()->first();
             }
+
+            $tipoTweet->usado = Carbon::now();
+            $tipoTweet->save();
             
             // Actualizamos el estado de la victima y el asesino si lo hubiera
             $victima->vivo = 0;
@@ -74,13 +80,18 @@ class bot extends Command
             }
             
             if($victima && strpos($texto, "[VICTIMA]") === false && strpos($texto, "[ASESINO]") === false){
+                    // Generamos la imagen con todos los nombre y el estado atual
                     $nombreImagen = "images/".date("YmdHis").".jpg";
                     Usuario::getImagenEstado($nombreImagen);
-                     $muerte = new MuerteTweet([
+
+                    // Almacenamos la muerte en la base de datos
+                    $muerte = new MuerteTweet([
                                     "texto" => $texto,
                                     "imagen" => $nombreImagen
                      ]);
-                     $muerte->save();
+                    $muerte->save();
+
+                    // Subimos la imagen y el tweet
                 	$uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path($nombreImagen))]);
 	                Twitter::postTweet([
                             'status' => $texto, 
@@ -89,6 +100,6 @@ class bot extends Command
                         ]);
             }
         }
-        
+
     }
 }

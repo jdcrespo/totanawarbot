@@ -15,7 +15,7 @@ class Usuario extends Model
 	const NOMBRE_CUENTA_BOT = "TotanaWarBot";
     
     const RESOLUCION_X_IMAGE = 2048;
-    const RESOLUCION_Y_IMAGE = 1080;
+    const RESOLUCION_Y_IMAGE = 1200;
 
     public static function getAlistamiento(){
     	$encontrados = array();
@@ -85,7 +85,7 @@ class Usuario extends Model
     public static function getImagenEstado($rutaImagenes, $sinMuertes = false){
         $fontSize = 24;
         $margin = 25;
-        $usuariosPorColumna = 40;
+        $usuariosPorColumna = 47;
         $maxX = 0;
         $maxY = 0;
         

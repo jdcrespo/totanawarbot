@@ -1,6 +1,6 @@
 <?php
 
-//use Twitter;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +25,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/muertes', 'MuertesController@index')->name('muertes');
 
 Route::resource("tipoTweet", "TipoTweetController");
+Route::get('/hora', function () {
 
+	//echo date("Y-m-d 00:00:00");
+
+    return Twitter::getTweet("1147256140427870208", ["format" => "array"]);
+});
 Route::get('/pruebas', function () {
-    return Twitter::getTweet("1142472066001756160", ["format" => "array"]);
+
+	//return Carbon::now()->timezone('Europe/Madrid');
+
+    return Twitter::getTweet("1147253288942874631", ["format" => "array"]);
 });
 
 Route::get('/usuarios/verificar/{idUsuario}', 'UsuariosController@valida')->name('verificar');
