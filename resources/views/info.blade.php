@@ -4,7 +4,7 @@
 <div class="row m-4">
     <div class="card col-md-6">
         <div class="card-header">
-            Fallecidos
+            Fallecidos: {{ count($muertos) }} usuarios
         </div>
         <div class="card-body">
            <table id="tablaMuertes">
@@ -27,7 +27,7 @@
     </div>
     <div class="card col-md-6">
         <div class="card-header">
-            Fallecidos
+            Vivos: {{ count($vivos) }} usuarios
         </div>
         <div class="card-body">
            <table id="tablaVivos">
@@ -50,7 +50,7 @@
 <div class="row m-4">
     <div class="card col-md-12">
         <div class="card-header">
-            Tipos de muerte
+            Tipos de muerte: {{ count($tiposTweet) }}
         </div>
         <div class="card-body">
             <table class="table ttable-sm table-hover" id="tablaTiposMuerte">
