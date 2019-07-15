@@ -23,5 +23,13 @@
         @endforeach
     </tbody>
 </table>
-
+<script type="text/javascript">
+    $(document).ready( function () {
+        $('#tablaUsuarios').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        } );
+    } );
+</script>
 @endsection

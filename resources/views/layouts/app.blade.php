@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,37 +25,47 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                @auth
+                    <a class="navbar-brand" href="{{ url('/home') }}">
+                @else
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                @endauth
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tipoTweet">Plantillas tweets</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/muertes">Ult. muertes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="/images/listado.jpg">Listado</a>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav mr-auto">
+                            @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="/tipoTweet">Plantillas tweets</a>
+                            </li>
+                            @endauth
+                            <li class="nav-item">
+                                <a class="nav-link" href="/muertes">Ult. muertes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/info">Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="_blank" href="/images/listado.jpg">Listado</a>
+                            </li>
+                        </ul>
+                    
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">Registrarse</a>
                                 </li>
                             @endif
                         @else

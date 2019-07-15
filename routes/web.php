@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/muertes', 'MuertesController@index')->name('muertes');
+Route::get('/info', 'InfoController@index')->name('info');
 
 Route::resource("tipoTweet", "TipoTweetController");
 Route::get('/hora', function () {

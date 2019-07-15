@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -70,7 +70,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready( function () {
-        $('#tablaUsuarios').datatable();
+        $('#tablaUsuarios').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        } );
     } );
 </script>
 
